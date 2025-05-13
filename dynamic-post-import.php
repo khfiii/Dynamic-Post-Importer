@@ -83,11 +83,12 @@ function dpi_import_next_ajax() {
     }
 
     // Konten dan penggantian kata pertama
+   // Konten dan penggantian semua kata yang match
     $content = $post["content"]["rendered"];
     if ($replace_word) {
-        $pattern = "/^<p>\s*(<strong>)?(" . preg_quote($replace_word, "/") . ")\s*[,–-]/i";
-        $replacement = "<p><strong>$site_title</strong> –";
-        $content = preg_replace($pattern, $replacement, $content, 1);
+        $pattern = "/\b" . preg_quote($replace_word, "/") . "\b/i"; // \b = word boundary
+        $replacement = "<strong>" . $site_title . "</strong>";
+        $content = preg_replace($pattern, $replacement, $content);
     }
 
     // Kategori
